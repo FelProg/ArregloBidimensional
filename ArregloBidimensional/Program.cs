@@ -7,7 +7,7 @@ namespace ArregloBidimensional
     //el programa solicita el tipo de reporte:
     //1. Despliegue de la tabla en general
     //2. Reporte individual con promedio
-    //3. Despliega los 3 primeros lugares
+    
     
     class Program
     {
@@ -20,6 +20,9 @@ namespace ArregloBidimensional
                 {"Germán  ","10","9","10","10" },
                 {"José    ","10","10","10","10" }
             };
+        
+        //arreglo para tomar los valores de las calificaciones numericas
+        static decimal[] total = new decimal[4];
 
         static void Main(string[] args)
         {
@@ -28,11 +31,16 @@ namespace ArregloBidimensional
 
             
         }
-        private static void Encabezado()
+        private static void Encabezado(bool principal = true, string nombre ="anonymus")
         {
-            //encabezado de tabla
-            Console.WriteLine("\n\tNombre del alumno\tEspañol \tMatemáticas \tProgramación \tProyectos \n");
+            if(principal)
+            Console.WriteLine("\n\t\t\t\tRegistro de calificaciones ciclo escolar 2020-2021\n");
+            else
+            Console.WriteLine($"\n\t\t\t\tReporte individual del alumno(a) : {nombre}");
+
+            Console.WriteLine("\n\tNombre del alumno\tEspañol \tMatemáticas \tProgramación \tProyectos \tPromedio\n");
         }
+
         private static void DespliegaTabla()
         {
             Encabezado();
@@ -41,7 +49,11 @@ namespace ArregloBidimensional
                 for (int j = 0; j < califAlumnos.GetLength(1); j++)
                 {
                     Console.Write($"\t{califAlumnos[i, j]}          ");
+                    //Como almaceno los numeros german
+                    if (j > 0)
+                        total[j-1] = Int32.Parse(califAlumnos[i, j]);
                 }
+                Console.WriteLine($"\t{CalculaPromedio(total)}");
                 Console.WriteLine();
             }
             Console.Write("\t");
@@ -66,37 +78,28 @@ namespace ArregloBidimensional
             Console.Clear();
 
             //*** busca el nombre y devuelve su renglon para desplegar******
-            //*** sus calificaciones iterando sobre el renglón *************
+            //*** sus calificaciones y promedio iterando sobre el renglón **
             //*** Encontrar devuelve -1 si no encuentra nombre *************
             
             int renglon = Encontrar(nombre);
             if (renglon != -1)
             {
-                //variables para controlar el promedio
-                //int cont = 0; 
-                //int sum = 0;
-                //decimal prom = 0m;
-                decimal[] total = new decimal[4];
-
                 
-                Encabezado();
+                Encabezado(false,nombre);
                 for(int i=0; i<califAlumnos.GetLength(1); i++)
                 {
                     Console.Write($"\t{califAlumnos[renglon, i]}          ");
 
+                    //parsea los numeros para meterlos en total
                     if (i > 0)
-                    {
                         total[i-1]= Int32.Parse(califAlumnos[renglon, i]);
-                        //cont++;
-                        //sum += 
-                    }
                 }
-                decimal prom = total.Sum() / total.Length;
-                Console.Write($"\n\n\tEl promedio total de {califAlumnos[renglon, 0]} es :    {prom}");
+                Console.WriteLine($"\t{CalculaPromedio(total)}");
+                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("\tAlumno no fue encontrado");
+                Console.WriteLine("\n\tAlumno no fue encontrado");
             }
             
             //***** fin de despliegue de calificaciones individuales ******
@@ -112,6 +115,12 @@ namespace ArregloBidimensional
                     return i;
             }
             return -1;
+        }
+
+        private static decimal CalculaPromedio(decimal[] total)
+        {
+            return total.Sum() / total.Length;
+
         }
 
        
