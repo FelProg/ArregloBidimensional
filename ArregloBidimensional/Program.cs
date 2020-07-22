@@ -33,12 +33,14 @@ namespace ArregloBidimensional
         private static void MenuPrincipal()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write($"\n\tBienvenido al programa de contról de calificaciones" +
                 $"\n\tSeleccione el número de la opcion deseada  " +
                 $"\n\n\t1.  Despliegue de calificaciones totales" +
                 $"\n\t2.  Consulta de alumno" +
                 $"\n\t3.  Salir   " +
             $"\n\n\tDigite la opción :   ");
+            Console.ResetColor();
             try
             {
                 int op = Int32.Parse(Console.ReadLine());
@@ -73,6 +75,7 @@ namespace ArregloBidimensional
         private static void Encabezado(bool principal = true, string nombre ="anonymus")
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
             if(principal)
             //Despliega si principal es true (valor de default)
             Console.WriteLine("\n\t\t\t\tRegistro de calificaciones ciclo escolar 2020-2021\n");
@@ -80,8 +83,10 @@ namespace ArregloBidimensional
             //Despliega si el método DespliegaReporteIndividual cambia los parámetros al 
             //llamar a encabezado.
             Console.WriteLine($"\n\t\t\t\tReporte individual del alumno(a) : {nombre}");
-
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\tNombre del alumno\tEspañol \tMatemáticas \tProgramación \tProyectos \tPromedio\n");
+            Console.ResetColor();
         }
 
         private static void DespliegaTabla()
