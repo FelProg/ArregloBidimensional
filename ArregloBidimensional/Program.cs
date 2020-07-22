@@ -23,15 +23,18 @@ namespace ArregloBidimensional
         static void Main(string[] args)
         {
             DespliegaTabla();
+            DespliegaRepoIndividual();
 
             
         }
-
-        private static void DespliegaTabla()
+        private static void Encabezado()
         {
             //encabezado de tabla
-           
             Console.WriteLine("\n\tNombre del alumno\tEspañol \tMatemáticas \tProgramación \tProyectos \n");
+        }
+        private static void DespliegaTabla()
+        {
+            Encabezado();
             for (int i = 0; i < califAlumnos.GetLength(0); i++)
             {
                 for (int j = 0; j < califAlumnos.GetLength(1); j++)
@@ -42,6 +45,45 @@ namespace ArregloBidimensional
             }
             Console.Write("\t");
             Console.ReadLine();
+        }
+
+        private static void DespliegaRepoIndividual()
+        {
+            Console.Clear();
+            Console.WriteLine("\n\tLista de alumnos\n\n");
+            for(int i=0; i<califAlumnos.GetLength(0); i++)
+            {
+                Console.Write($"\t{califAlumnos[i, 0]}  ");
+            }
+            Console.Write("\n\n\tCual desea consultar :  ");
+            string nombre = Console.ReadLine();
+
+            Console.Clear();
+            int renglon = Encontrar(nombre);
+            if (renglon != -1)
+            {
+                Encabezado();
+                for(int i=0; i<califAlumnos.GetLength(1); i++)
+                {
+                    Console.Write($"\t{califAlumnos[renglon, i]}          ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\tAlumno no fue encontrado");
+            }
+            Console.ReadLine();
+        }
+
+        private static int Encontrar(string nombre)
+        {
+            for (int i = 0; i < califAlumnos.GetLength(0); i++)
+            {
+                //El Trim, corta los espacios asignados por estetica en el arreglo
+                if (nombre.ToUpper() == califAlumnos[i, 0].Trim().ToUpper())
+                    return i;
+            }
+            return -1;
         }
     }
 }
