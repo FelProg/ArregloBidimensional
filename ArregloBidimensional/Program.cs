@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ArregloBidimensional
 {
@@ -50,28 +51,55 @@ namespace ArregloBidimensional
         private static void DespliegaRepoIndividual()
         {
             Console.Clear();
+            //*********** Despliega la lista de los alumnos *********
             Console.WriteLine("\n\tLista de alumnos\n\n");
             for(int i=0; i<califAlumnos.GetLength(0); i++)
             {
                 Console.Write($"\t{califAlumnos[i, 0]}  ");
             }
+            //*********** fin de despliegue *************************
+            
+            //********** toma el dato para consultar en "nombre" *******
             Console.Write("\n\n\tCual desea consultar :  ");
             string nombre = Console.ReadLine();
 
             Console.Clear();
+
+            //*** busca el nombre y devuelve su renglon para desplegar******
+            //*** sus calificaciones iterando sobre el renglón *************
+            //*** Encontrar devuelve -1 si no encuentra nombre *************
+            
             int renglon = Encontrar(nombre);
             if (renglon != -1)
             {
+                //variables para controlar el promedio
+                //int cont = 0; 
+                //int sum = 0;
+                //decimal prom = 0m;
+                decimal[] total = new decimal[4];
+
+                
                 Encabezado();
                 for(int i=0; i<califAlumnos.GetLength(1); i++)
                 {
                     Console.Write($"\t{califAlumnos[renglon, i]}          ");
+
+                    if (i > 0)
+                    {
+                        total[i-1]= Int32.Parse(califAlumnos[renglon, i]);
+                        //cont++;
+                        //sum += 
+                    }
                 }
+                decimal prom = total.Sum() / total.Length;
+                Console.Write($"\n\n\tEl promedio total de {califAlumnos[renglon, 0]} es :    {prom}");
             }
             else
             {
                 Console.WriteLine("\tAlumno no fue encontrado");
             }
+            
+            //***** fin de despliegue de calificaciones individuales ******
             Console.ReadLine();
         }
 
@@ -85,5 +113,7 @@ namespace ArregloBidimensional
             }
             return -1;
         }
+
+       
     }
 }
