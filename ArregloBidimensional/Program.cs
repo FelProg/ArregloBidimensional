@@ -59,9 +59,13 @@ namespace ArregloBidimensional
                 $"\n\t4.  Salir   " +
             $"\n\n\tDigite la opción :   ");
             Console.ResetColor();
+
             try
             {
-                int op = Int32.Parse(Console.ReadLine());
+                //int op = Int32.Parse(Console.ReadLine());
+
+                //regresa 0 si no lo encuentra.
+                Int32.TryParse(Console.ReadLine(), out int op);
                 switch (op)
                 {
                     case 1:
